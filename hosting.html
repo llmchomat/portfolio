@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio – Travaux</title>
+  <link rel="stylesheet" href="feuille-css.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="layout-container profile-header">
+    <div class="profile-info">
+      <h1 class="profile-name">Mes travaux</h1>
+      <p class="profile-title">Liens vers mes projets hébergés sur Hosting</p>
+
+      <nav class="profile-links">
+        <a class="link link--primary" href="index.html">← Portfolio</a>
+        <a class="link" href="https://github.com/llmchomat" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENU -->
+  <main class="layout-container layout-grid">
+
+    <!-- WordPress L102 -->
+    <section class="card layout-full project">
+      <h2 class="card-title">WordPress — UE L102</h2>
+      <p class="card-muted">
+        Site WordPress hébergé sur Hosting.
+      </p>
+
+      <div class="project-actions">
+        <!-- Remplace l’URL -->
+        <a class="btn" href="https://chomat1.hosting.unilim.fr/UEL102/UEL102/" target="_blank" rel="noopener">
+          Ouvrir le WordPress (L102)
+        </a>
+      </div>
+
+      <p class="project-meta">
+        URL : <span class="badge">https://chomat1.hosting.unilim.fr/UEL102/UEL102/</span>
+      </p>
+    </section>
+
+    <!-- Mini-site L104 -->
+    <section class="card layout-full project">
+      <h2 class="card-title">Mini-site — UE L104</h2>
+      <p class="card-muted">
+        Site WordPress hébergé sur Hosting. <span class="badge">/minisite</span>.
+      </p>
+
+      <div class="project-actions">
+        <!-- Remplace l’URL -->
+        <a class="btn" href="https://TON-DOMAINE/minisite/" target="_blank" rel="noopener">
+          Ouvrir le mini-site (L104)
+        </a>
+      </div>
+
+      <p class="project-meta">
+        URL : <span class="badge">https://TON-DOMAINE/minisite/</span>
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="layout-container site-footer">
+    <p>© <span id="year"></span> — Portfolio</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

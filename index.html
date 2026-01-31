@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio – Lila-May Chomat</title>
+  <link rel="stylesheet" href="feuille-css.css">
+</head>
+
+<body>
+
+  <!-- HEADER / PROFIL -->
+  <header class="layout-container profile-header header-bg">
+    <div class="profile-info">
+      <h1 class="profile-name">Lila-May Chomat</h1>
+      <p class="profile-title">Étudiante en Application Web</p>
+
+      <nav class="profile-links">
+        <a class="link" href="https://github.com/llmchomat" target="_blank" rel="noopener">GitHub</a>
+        <a class="link" href="https://www.linkedin.com/in/lila-may-chomat-294a60348" target="_blank" rel="noopener">Linkedin</a>
+        <a class="link link--primary" href="hosting.html">Mes travaux</a>
+      </nav>
+    </div>
+
+    <!-- Photo facultative (tu peux supprimer la balise si tu n'en as pas) -->
+    <img src="medias/img-hosting.jpg" alt="Photo de profil" class="profile-photo">
+  </header>
+
+  <!-- CONTENU -->
+  <main class="layout-container layout-grid">
+
+    <section class="card">
+      <h2 class="card-title">Profil</h2>
+      <p class="card-text">
+        Étudiante en L1 Pro Métiers de l’Informatique – Application Web (Université de Limoges, distanciel).
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Compétences</h2>
+      <ul class="list">
+        <li class="list-item">HTML / CSS</li>
+        <li class="list-item">JavaScript (bases)</li>
+        <li class="list-item">Python, Java (notions)</li>
+        <li class="list-item">Canva, Wix</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Formation</h2>
+      <ul class="list">
+        <li class="list-item">2025–2028 — L1 Professionnelle Application Web (Université de Limoges)</li>
+        <li class="list-item">2024–2025 — L1 ISTN LAS Informatique-Électronique (Rennes 1)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Expériences</h2>
+      <ul class="list">
+        <li class="list-item">Depuis 07/2025 — CDI restauration (Rennes)</li>
+        <li class="list-item">Depuis 2024 — Flyers & contenus web (Rennes)</li>
+      </ul>
+    </section>
+
+    <!-- API 1 : GitHub -->
+    <section class="card layout-full api-section">
+      <h2 class="card-title">Mes projets GitHub </h2>
+      <p class="card-muted">Mes projets commencés et partagés de mon GitHub</p>
+
+      <div class="api-box">
+        <ul id="repos" class="list"></ul>
+      </div>
+    </section>
+
+    <!-- API 2 : Unsplash (photo précise) -->
+    <section class="card layout-full api-section">
+      <h2 class="card-title">Photo via API Unsplash</h2>
+     
+      <div class="api-box">
+        <p id="unsplashCredit" class="card-muted media-credit"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="layout-container site-footer">
+    <p>© <span id="year"></span> — Lila-May Chomat</p>
+  </footer>
+
+  <!-- SCRIPTS (APIs) -->
+  <script>
+    // Année
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* =========================
+       API 1 : GitHub repos
+       ========================= */
+    const GITHUB_USER = "llmchomat"; // <-- remplace
+
+    fetch(`https://api.github.com/users/llmchomat/repos?sort=updated&per_page=5`)
+      .then(r => r.json())
+      .then(repos => {
+        const list = document.getElementById("repos");
+        list.innerHTML = "";
+
+        if (!Array.isArray(repos) || repos.length === 0) {
+          list.innerHTML = "<li class='list-item'>Aucun dépôt public trouvé.</li>";
+          return;
+        }
+
+        repos.forEach(repo => {
+          const li = document.createElement("li");
+          li.className = "list-item";
+          li.innerHTML = `<a class="link" href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a>`;
+          list.appendChild(li);
+        });
+        // --- Lien vers les travaux hébergés sur Hosting ---
+          const liHosting = document.createElement("li");
+          liHosting.className = "list-item";
+          liHosting.innerHTML = "Accéder à <a class='link' href='hosting.html'>mes travaux</a> (Hosting)";
+          list.appendChild(liHosting);
+
+      })
+      .catch(() => {
+        document.getElementById("repos").innerHTML =
+          "<li class='list-item'>Erreur lors de l’appel à l’API GitHub.</li>";
+      });
+
+    /* =========================
+   API 2 : Unsplash (photo précise)
+   ========================= */
+
+const UNSPLASH_ACCESS_KEY = "-eJPejwlhPgmwAsLt9F7ZR5pWikoYWMlFnHlEJ1HvkA";
+const PHOTO_ID = "msAJTkXweVk";
+const APP_NAME = "portfolio_lila_may";
+
+fetch(`https://api.unsplash.com/photos/${PHOTO_ID}`, {
+  headers: {
+    "Accept-Version": "v1",
+    "Authorization": `Client-ID ${UNSPLASH_ACCESS_KEY}`
+  }
+})
+  .then(r => r.json())
+  .then(photo => {
+
+    // Image
+    const header = document.querySelector(".header-bg");
+    header.style.backgroundImage = `url(${photo.urls.regular})`;
+    img.alt = photo.alt_description || "Photo Unsplash";
+
+    // Attribution (obligatoire)
+    const photographerName = photo.user.name;
+    const photographerUrl =
+      `${photo.user.links.html}?utm_source=${APP_NAME}&utm_medium=referral`;
+    const unsplashUrl =
+      `https://unsplash.com/?utm_source=${APP_NAME}&utm_medium=referral`;
+
+    document.getElementById("unsplashCredit").innerHTML = `
+      Photo par <a class="link" href="${photographerUrl}" target="_blank" rel="noopener">
+        ${photographerName}
+      </a>
+      sur <a class="link" href="${unsplashUrl}" target="_blank" rel="noopener">
+        Unsplash
+      </a>.
+    `;
+  })
+.catch(() => {
+  document.getElementById("unsplashCredit").innerHTML = `
+    Voir la photo directement sur
+    <a class="link"
+       href="https://unsplash.com/fr/photos/un-ecran-dordinateur-pose-sur-un-bureau-msAJTkXweVk"
+       target="_blank"
+       rel="noopener">
+       Unsplash
+    </a>.
+  `;
+});
+
+
+  </script>
+
+</body>
+</html>
